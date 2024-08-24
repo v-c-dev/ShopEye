@@ -21,35 +21,36 @@ namespace ShopEye.Services.API
 
         public async Task<ItemEntity> GetItemDetailsAsync(string barcode)
         {
-            var url = $"https://api.barcodespider.com/v1/lookup?token={_apiKey}&upc={barcode}";
+            var url = $"https://api.barcodespider.com/v1/lookup?token={_apiKey}&barcode={barcode}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
-            var itemDetails = JsonSerializer.Deserialize<BarcodeSpiderResponse>(content);
-
-            if (itemDetails?.ItemAttributes == null)
-            {
-                return null;
-            }
+            var jsonDocument = JsonDocument.Parse(content);
+            var itemAttributes = jsonDocument.RootElement.GetProperty("item_attributes");
 
             return new ItemEntity
             {
-                Name = itemDetails.ItemAttributes.Title,
-                Manufacturer = itemDetails.ItemAttributes.Brand,
-                UPC = barcode
+                Title = itemAttributes.GetProperty("title").GetString(),
+                UPC = itemAttributes.GetProperty("upc").GetString(),
+                EAN = itemAttributes.GetProperty("ean").GetString(),
+                ParentCategory = itemAttributes.GetProperty("parent_category").GetString(),
+                Category = itemAttributes.GetProperty("category").GetString(),
+                Brand = itemAttributes.GetProperty("brand").GetString(),
+                Model = itemAttributes.GetProperty("model").GetString(),
+                MPN = itemAttributes.GetProperty("mpn").GetString(),
+                Manufacturer = itemAttributes.GetProperty("manufacturer").GetString(),
+                Publisher = itemAttributes.GetProperty("publisher").GetString(),
+                ASIN = itemAttributes.GetProperty("asin").GetString(),
+                Color = itemAttributes.GetProperty("color").GetString(),
+                Size = itemAttributes.GetProperty("size").GetString(),
+                Weight = itemAttributes.GetProperty("weight").GetString(),
+                ImageUrl = itemAttributes.GetProperty("image").GetString(),
+                IsAdult = itemAttributes.GetProperty("is_adult").GetString() == "1",
+                Description = itemAttributes.GetProperty("description").GetString(),
+                LowestPrice = decimal.Parse(itemAttributes.GetProperty("lowest_price").GetString()),
+                HighestPrice = decimal.Parse(itemAttributes.GetProperty("highest_price").GetString())
             };
         }
-    }
-
-    public class BarcodeSpiderResponse
-    {
-        public ItemAttributes ItemAttributes { get; set; }
-    }
-
-    public class ItemAttributes
-    {
-        public string Title { get; set; }
-        public string Brand { get; set; }
     }
 }

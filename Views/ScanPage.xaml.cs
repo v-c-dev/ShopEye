@@ -31,7 +31,6 @@ public partial class ScanPage : ContentPage
     private async void barcodeReader_OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
         var first = e.Results?.FirstOrDefault();
-
         if (first == null)
         {
             return;
@@ -39,28 +38,14 @@ public partial class ScanPage : ContentPage
 
         Dispatcher.DispatchAsync(async () =>
         {
-            if (first.Format == BarcodeFormat.QrCode)
-            {
-                await DisplayAlert("QR Code detected", "QR codes are not supported", "OK");
-                return;
-            }
+            var apiService = App.Current.Handler.MauiContext.Services.GetService<IApiService>();
+            var databaseService = App.Current.Handler.MauiContext.Services.GetService<IDatabaseService>();
 
-            string scannedUPC = first.Value;
+            var item = await apiService.GetItemDetailsAsync(first.Value);
+            await databaseService.AddItemAsync(item);
 
-            // Fetch item details from the API
-            var itemDetails = await _apiService.GetItemDetailsAsync(scannedUPC);
-
-            if (itemDetails == null)
-            {
-                await DisplayAlert("Error", "No item found for the scanned UPC", "OK");
-                return;
-            }
-
-            // Save item details to the SQLite database
-            await _databaseService.AddItemAsync(itemDetails);
-
-            // Navigate to MoreInfoPage with the new item's ID
-            await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={itemDetails.Id}");
+            // Navigate to MoreInfoPage with the scanned item details
+            await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={item.Id}");
         });
     }
 

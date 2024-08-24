@@ -32,8 +32,8 @@ public partial class MoreInfoPage : ContentPage
         {
             Dispatcher.Dispatch(() =>
             {
-                itemNameTitle.Text = item.Name;
-                itemNameLabel.Text = item.Name;
+                itemNameTitle.Text = item.Title;
+                itemNameLabel.Text = item.Title;
                 itemManufacturer.Text = item.Manufacturer;
                 itemScanTime.Text = item.Scandate.ToString();
                 itemUpc.Text = item.UPC;
