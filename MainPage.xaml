@@ -1,12 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShopEye.MainPage"
-             Title="MainPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="ShopEye.MainPage">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="Fill">
+            <Label
+                Text="Home"
+                TextColor="White"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HeightRequest="50"
+                FontSize="Medium" 
+                FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Image
+                Source="barcode_verifying.svg"
+                HeightRequest="160"
+                Aspect="AspectFit"
+                SemanticProperties.Description="barcode icon"
+                Margin="10"/>
+
+            <Label
+                Text="Welcome to Detail Shopping"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Scan barcodes from products and find out more about who made them"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Scan barcodes from products and find out more about who made them" 
+                Margin="0, 0, 0, 30"/>
+
+            <Button
+                x:Name="btnScan"
+                Text="Scan Now" 
+                SemanticProperties.Hint="Go to Scan Page"
+                Clicked="BtnScan_OnClicked"
+                HorizontalOptions="Fill" />
+
+            <Button
+                x:Name="btnHistory"
+                Text="Scan History" 
+                SemanticProperties.Hint="Go to Scan History Page"
+                Clicked="BtnHistory_OnClicked"
+                HorizontalOptions="Fill" 
+                Margin="0, 0, 0, 30"/>
+
+            <Button
+                x:Name="btnAbout"
+                Text="About this App"
+                SemanticProperties.Hint="Go to About Page"
+                Clicked="BtnAbout_OnClicked"
+                />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
