@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopEye.Views.AboutPage"
+             Title="About this App">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="Fill">
+            <Label
+                Text="About"
+                TextColor="White"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HeightRequest="50"
+                FontSize="Medium" 
+                FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="This app is meant to display information regarding products sold at stores by reading the barcodes."
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level8"
+                SemanticProperties.Description="This app is meant to display information regarding products sold at stores by reading the barcodes.">
+            </Label>
+
+            <Label
+                Text="The app does not log user information or has access to Contacts, Location, Storage, or any other internal file."
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level8"
+                SemanticProperties.Description="The app does not log user information or has access to Contacts, Location, Storage, or any other internal file.">
+            </Label>
+
+            <!--<Button
+                x:Name="btnBack"
+                Text="Back" 
+                SemanticProperties.Hint="Go to Home Page"
+                Clicked="btnBack_OnClicked"
+                Margin="0,50"/>-->
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
