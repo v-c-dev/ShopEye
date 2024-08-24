@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopEye.Views.MoreInfoPage"
+             Title="More Info">
+
+    <ScrollView>
+
+
+        <VerticalStackLayout Spacing="20">
+            <Label x:Name="itemNameTitle"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="UPC:"/>
+                <Frame>
+                    <Label
+                        x:Name="itemUpc"
+                        HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="Product Name:"/>
+                <Frame>
+                    <Label
+                        x:Name="itemNameLabel"
+                        Text=""
+                        HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="Manufacturer:"/>
+                <Frame>
+                    <Label
+                            x:Name="itemManufacturer"
+                            Text=""
+                            HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="Country of origin:"/>
+                <Frame>
+                    <Label
+                            x:Name="itemCountry"
+                            Text=""
+                            HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="Scan date:"/>
+                <Frame>
+                    <Label
+                            x:Name="itemScanTime"
+                            Text=""
+                            HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <Button
+                x:Name="btnBack"
+                Text="Back"
+                SemanticProperties.Hint="Go Back"
+                Clicked="btnBack_OnClicked"/>
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>

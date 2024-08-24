@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="ShopEye.Views.ScanPage"
+             Title="Scan Page">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="Fill">
+            <Label
+                Text="Scan"
+                TextColor="White"
+                VerticalTextAlignment="Center"
+                VerticalOptions="Center"
+                HeightRequest="50"
+                FontSize="Medium" 
+                FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20,0"
+            Spacing="25">
+
+            <zxing:CameraBarcodeReaderView
+                x:Name="barcodeReader"
+                IsDetecting="True"
+                IsTorchOn="False"
+                BarcodesDetected="barcodeReader_OnBarcodesDetected"
+                Margin=" 0, 80"/>
+
+
+            <!--<Button
+                x:Name="btnBack"
+                Text="Back"
+                SemanticProperties.Hint="Go to Main"
+                Clicked="BtnBack_OnClicked"/>-->
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
