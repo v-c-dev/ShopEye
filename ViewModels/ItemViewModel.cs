@@ -26,13 +26,6 @@ namespace ShopEye.ViewModels
             set => SetProperty(ref _manufacturer, value);
         }
 
-        //private string _origin;
-        //public string Origin
-        //{
-        //    get => _origin;
-        //    set => SetProperty(ref _origin, value);
-        //}
-
         private string _upc;
         public string UPC
         {
@@ -61,7 +54,6 @@ namespace ShopEye.ViewModels
             {
                 Name = Name,
                 Manufacturer = Manufacturer,
-                //Origin = Origin,
                 Scandate = DateTime.Now,
                 UPC = UPC
             };
@@ -72,7 +64,6 @@ namespace ShopEye.ViewModels
             // Clear input fields after adding the item
             Name = string.Empty;
             Manufacturer = string.Empty;
-            //Origin = string.Empty;
             UPC = string.Empty;
         }
 

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopEye.Models;
+﻿using ShopEye.Models.Entities;
 
 namespace ShopEye.Services.API
 {
-    interface IApiService
+    public interface IApiService
     {
-        Task<Item> GetItemDetailsAsync(string barcode);
+        Task<ItemEntity> GetItemDetailsAsync(string barcode);
     }
 }
