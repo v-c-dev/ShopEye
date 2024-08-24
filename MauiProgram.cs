@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ShopEye.Services.API;
 using ShopEye.Services.Database;
+using ShopEye.Views;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
 
@@ -21,7 +22,7 @@ namespace ShopEye
                 })
                 .UseBarcodeReader()
 
-            #region ZXing-bug-prevention
+                #region ZXing-bug-prevention
                 .ConfigureMauiHandlers(h =>
                 {
                     h.AddHandler(typeof(ZXing.Net.Maui.Controls.CameraBarcodeReaderView), typeof(CameraBarcodeReaderViewHandler));
@@ -35,18 +36,19 @@ namespace ShopEye
             builder.Services.AddSingleton<IDatabaseService>(s => new DatabaseService(dbPath));
             #endregion
 
-            //TODO: Use Secure storage instead of appsettings
-            #region barcodelookup
+            // TODO: Use Secure storage instead of appsettings
+            #region barcodespider
             builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             string apiKey = builder.Configuration["ApiSettings:BarcodeSpiderApiKey"];
             builder.Services.AddSingleton<IApiService>(s => new ApiService(apiKey));
             #endregion
 
-#if DEBUG
+            #if DEBUG
             builder.Logging.AddDebug();
-#endif
+            #endif
 
-
+            builder.Services.AddTransient<ScanPage>();
+            builder.Services.AddTransient<MoreInfoPage>();
 
             return builder.Build();
         }

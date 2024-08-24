@@ -12,11 +12,11 @@ namespace ShopEye.ViewModels
 
         public ObservableCollection<ItemEntity> Items { get; private set; }
 
-        private string _name;
-        public string Name
+        private string _title;
+        public string Title
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
 
         private string _manufacturer;
@@ -26,18 +26,39 @@ namespace ShopEye.ViewModels
             set => SetProperty(ref _manufacturer, value);
         }
 
-        //private string _origin;
-        //public string Origin
-        //{
-        //    get => _origin;
-        //    set => SetProperty(ref _origin, value);
-        //}
-
         private string _upc;
         public string UPC
         {
             get => _upc;
             set => SetProperty(ref _upc, value);
+        }
+
+        private string _brand;
+        public string Brand
+        {
+            get => _brand;
+            set => SetProperty(ref _brand, value);
+        }
+
+        private string _category;
+        public string Category
+        {
+            get => _category;
+            set => SetProperty(ref _category, value);
+        }
+
+        private string _model;
+        public string Model
+        {
+            get => _model;
+            set => SetProperty(ref _model, value);
+        }
+
+        private DateTime _scandate;
+        public DateTime ScanDate
+        {
+            get => _scandate;
+            set => SetProperty(ref _scandate, value);
         }
 
         public ICommand AddItemCommand { get; }
@@ -59,20 +80,24 @@ namespace ShopEye.ViewModels
         {
             var newItem = new ItemEntity
             {
-                Name = Name,
+                Title = Title,
                 Manufacturer = Manufacturer,
-                //Origin = Origin,
-                Scandate = DateTime.Now,
-                UPC = UPC
+                Brand = Brand,
+                Category = Category,
+                Model = Model,
+                UPC = UPC,
+                Scandate = DateTime.Now
             };
 
             await _databaseService.AddItemAsync(newItem);
             Items.Add(newItem);
 
             // Clear input fields after adding the item
-            Name = string.Empty;
+            Title = string.Empty;
             Manufacturer = string.Empty;
-            //Origin = string.Empty;
+            Brand = string.Empty;
+            Category = string.Empty;
+            Model = string.Empty;
             UPC = string.Empty;
         }
 

@@ -1,31 +1,43 @@
 using ShopEye.Models;
 using ShopEye.Services.Repositories;
+using ShopEye.Services.Database;
 
 namespace ShopEye.Views;
 
 [QueryProperty(nameof(Id), "Id")]
 public partial class MoreInfoPage : ContentPage
 {
-    private Item item;
-    public MoreInfoPage()
+    private readonly IDatabaseService _databaseService;
+    private int _itemId;
+
+    public MoreInfoPage(IDatabaseService databaseService)
     {
         InitializeComponent();
+        _databaseService = databaseService;
     }
 
     public string Id
     {
         set
         {
-            item = ItemRepository.GetItemById(int.Parse(value));
-            if (item != null)
+            _itemId = int.Parse(value);
+            Task.Run(async () => await LoadItemDetails(_itemId));
+        }
+    }
+
+    private async Task LoadItemDetails(int id)
+    {
+        var item = await _databaseService.GetItemByIdAsync(id);
+        if (item != null)
+        {
+            Dispatcher.Dispatch(() =>
             {
-                itemNameTitle.Text = item.Name;
-                itemNameLabel.Text = item.Name;
+                itemNameTitle.Text = item.Title;
+                itemNameLabel.Text = item.Title;
                 itemManufacturer.Text = item.Manufacturer;
-                //itemCountry.Text = item.Origin;
                 itemScanTime.Text = item.Scandate.ToString();
                 itemUpc.Text = item.UPC;
-            }
+            });
         }
     }
 

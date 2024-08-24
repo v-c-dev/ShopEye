@@ -1,18 +1,26 @@
 using System.Net.NetworkInformation;
+using ShopEye.Models.Entities;
+using ShopEye.Services.API;
+using ShopEye.Services.Database;
 using ZXing.Net.Maui;
+
 
 namespace ShopEye.Views;
 
 public partial class ScanPage : ContentPage
 {
-    public ScanPage()
+    private readonly IApiService _apiService;
+    private readonly IDatabaseService _databaseService;
+
+    public ScanPage(IApiService apiService, IDatabaseService databaseService)
     {
         InitializeComponent();
+        _apiService = apiService;
+        _databaseService = databaseService;
+
         barcodeReader.Options = new ZXing.Net.Maui.BarcodeReaderOptions
         {
             Formats = BarcodeFormats.All,
-
-            //Limits to a given format --> Formats = ZXing.Net.Maui.BarcodeFormat.Ean13,
             Multiple = true,
             AutoRotate = true,
             TryHarder = true
@@ -20,10 +28,9 @@ public partial class ScanPage : ContentPage
         barcodeReader.CameraLocation = CameraLocation.Rear;
     }
 
-    private void barcodeReader_OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
+    private async void barcodeReader_OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
         var first = e.Results?.FirstOrDefault();
-
         if (first == null)
         {
             return;
@@ -31,13 +38,14 @@ public partial class ScanPage : ContentPage
 
         Dispatcher.DispatchAsync(async () =>
         {
-            if (first.Format == BarcodeFormat.QrCode)
-            {
-                await DisplayAlert("QR Code detected", "QR codes are not supported", "OK");
-            }
-            //UPC search logic
-            //Add to Items
-            await DisplayAlert("Barcode detected", first.Value, "OK");
+            var apiService = App.Current.Handler.MauiContext.Services.GetService<IApiService>();
+            var databaseService = App.Current.Handler.MauiContext.Services.GetService<IDatabaseService>();
+
+            var item = await apiService.GetItemDetailsAsync(first.Value);
+            await databaseService.AddItemAsync(item);
+
+            // Navigate to MoreInfoPage with the scanned item details
+            await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={item.Id}");
         });
     }
 
