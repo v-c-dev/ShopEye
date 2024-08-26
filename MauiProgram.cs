@@ -5,6 +5,12 @@ using ShopEye.Services.Database;
 using ShopEye.Views;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
+using Google.Cloud.SecretManager.V1;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Core;
+using Grpc.Auth;
+using System.Threading.Channels;
+using Grpc.Net.Client;
 
 namespace ShopEye
 {
@@ -22,7 +28,8 @@ namespace ShopEye
                 })
                 .UseBarcodeReader()
 
-                #region ZXing-bug-prevention
+
+            #region ZXing-bug-prevention
                 .ConfigureMauiHandlers(h =>
                 {
                     h.AddHandler(typeof(ZXing.Net.Maui.Controls.CameraBarcodeReaderView), typeof(CameraBarcodeReaderViewHandler));
@@ -36,21 +43,53 @@ namespace ShopEye
             builder.Services.AddSingleton<IDatabaseService>(s => new DatabaseService(dbPath));
             #endregion
 
-            // TODO: Use Secure storage instead of appsettings
             #region barcodespider
-            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            string apiKey = builder.Configuration["ApiSettings:BarcodeSpiderApiKey"];
+            // Fetch the API key from Google Cloud Secret Manager
+            string apiKey = GetApiKeyFromSecretManager().Result;
             builder.Services.AddSingleton<IApiService>(s => new ApiService(apiKey));
             #endregion
 
-            #if DEBUG
+#if DEBUG
             builder.Logging.AddDebug();
-            #endif
+#endif
 
             builder.Services.AddTransient<ScanPage>();
             builder.Services.AddTransient<MoreInfoPage>();
 
             return builder.Build();
         }
+
+        public static async Task<string> GetApiKeyFromSecretManager()
+        {
+            // Authenticate using the service account
+            GoogleCredential credential = await GoogleCredential.GetApplicationDefaultAsync();
+
+            // Create CallCredentials from the Google Credential
+            CallCredentials callCredentials = credential.ToCallCredentials();
+
+            // Combine the CallCredentials with SslCredentials
+            ChannelCredentials channelCredentials = ChannelCredentials.Create(new SslCredentials(), callCredentials);
+
+            // Define the gRPC channel address (Secret Manager)
+            var grpcChannel = GrpcChannel.ForAddress("https://secretmanager.googleapis.com", new GrpcChannelOptions
+            {
+                Credentials = channelCredentials
+            });
+
+            // Create the Secret Manager client using the gRPC channel
+            var client = new SecretManagerServiceClientBuilder
+            {
+                ChannelCredentials = channelCredentials
+            }.Build();
+
+            SecretVersionName secretVersionName = new SecretVersionName("GoogleProjectId", "GoogleSecretId", "latest");
+
+            // Access the secret
+            AccessSecretVersionResponse result = await client.AccessSecretVersionAsync(secretVersionName);
+            string apiKey = result.Payload.Data.ToStringUtf8();
+
+            return apiKey;
+        }
+
     }
 }

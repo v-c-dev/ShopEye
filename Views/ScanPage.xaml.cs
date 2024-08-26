@@ -30,14 +30,14 @@ public partial class ScanPage : ContentPage
 
     private async void barcodeReader_OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
-        var first = e.Results?.FirstOrDefault();
-        if (first == null)
+        try
         {
-            return;
-        }
+            var first = e.Results?.FirstOrDefault();
+            if (first == null)
+            {
+                return;
+            }
 
-        Dispatcher.DispatchAsync(async () =>
-        {
             var apiService = App.Current.Handler.MauiContext.Services.GetService<IApiService>();
             var databaseService = App.Current.Handler.MauiContext.Services.GetService<IDatabaseService>();
 
@@ -46,7 +46,12 @@ public partial class ScanPage : ContentPage
 
             // Navigate to MoreInfoPage with the scanned item details
             await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={item.Id}");
-        });
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+            throw;
+        }
     }
 
     private void BtnBack_OnClicked(object? sender, EventArgs e)

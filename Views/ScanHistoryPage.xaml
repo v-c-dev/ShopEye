@@ -26,7 +26,8 @@
             BackgroundColor="Transparent"
             SeparatorColor="Silver"
             ItemSelected="scanHistoryList_OnItemSelected"
-            ItemTapped="scanHistoryList_OnItemTapped">
+            ItemTapped="scanHistoryList_OnItemTapped"
+            HeightRequest="800">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
