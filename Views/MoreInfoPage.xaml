@@ -10,9 +10,24 @@
         <VerticalStackLayout Spacing="20">
             <Label x:Name="itemNameTitle"
                    FontSize="18"
+                   Margin="5"
                    FontAttributes="Bold"
                    VerticalOptions="Center" 
                    HorizontalOptions="Center"/>
+
+            <VerticalStackLayout 
+                Margin="5"
+                Spacing="3"
+                Padding="3">
+                <Label Text="Product Name:"
+                       FontAttributes="Bold"/>
+                <Frame>
+                    <Label
+                        x:Name="itemNameLabel"
+                        Text=""
+                        HorizontalOptions="Start"/>
+                </Frame>
+            </VerticalStackLayout>
 
             <VerticalStackLayout 
                 Margin="5"
@@ -30,16 +45,16 @@
                 Margin="5"
                 Spacing="3"
                 Padding="3">
-                <Label Text="Product Name:"/>
+                <Label Text="Brand:"/>
                 <Frame>
                     <Label
-                        x:Name="itemNameLabel"
+                        x:Name="itemBrand"
                         Text=""
                         HorizontalOptions="Start"/>
                 </Frame>
             </VerticalStackLayout>
 
-            <VerticalStackLayout 
+            <!--<VerticalStackLayout 
                 Margin="5"
                 Spacing="3"
                 Padding="3">
@@ -50,20 +65,7 @@
                             Text=""
                             HorizontalOptions="Start"/>
                 </Frame>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout 
-                Margin="5"
-                Spacing="3"
-                Padding="3">
-                <Label Text="Country of origin:"/>
-                <Frame>
-                    <Label
-                            x:Name="itemCountry"
-                            Text=""
-                            HorizontalOptions="Start"/>
-                </Frame>
-            </VerticalStackLayout>
+            </VerticalStackLayout>-->
 
             <VerticalStackLayout 
                 Margin="5"

@@ -1,5 +1,3 @@
-using ShopEye.Models;
-using ShopEye.Services.Repositories;
 using ShopEye.Services.Database;
 
 namespace ShopEye.Views;
@@ -30,11 +28,13 @@ public partial class MoreInfoPage : ContentPage
         var item = await _databaseService.GetItemByIdAsync(id);
         if (item != null)
         {
+            //bool isManufacturer = string.IsNullOrEmpty(item.Manufacturer);
             Dispatcher.Dispatch(() =>
             {
-                itemNameTitle.Text = item.Title;
+                //itemNameTitle.Text = item.Title;
                 itemNameLabel.Text = item.Title;
-                itemManufacturer.Text = item.Manufacturer;
+                itemBrand.Text = item.Brand;
+                //itemManufacturer.Text = isManufacturer ? item.Brand : item.Manufacturer;
                 itemScanTime.Text = item.Scandate.ToString();
                 itemUpc.Text = item.UPC;
             });

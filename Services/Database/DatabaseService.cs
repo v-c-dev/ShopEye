@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ShopEye.Models.Entities;
 using SQLite;
 
@@ -45,11 +40,6 @@ namespace ShopEye.Services.Database
         public async Task<ItemEntity> GetItemByIdAsync(int id)
         {
             return await _database.FindAsync<ItemEntity>(id);
-        }
-
-        public async Task UpdateItemAsync(ItemEntity item)
-        {
-            await _database.UpdateAsync(item);
         }
 
         public async Task DeleteItemAsync(int id)

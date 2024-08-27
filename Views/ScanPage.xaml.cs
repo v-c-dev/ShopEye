@@ -1,5 +1,3 @@
-using System.Net.NetworkInformation;
-using ShopEye.Models.Entities;
 using ShopEye.Services.API;
 using ShopEye.Services.Database;
 using ZXing.Net.Maui;
@@ -45,7 +43,10 @@ public partial class ScanPage : ContentPage
             await databaseService.AddItemAsync(item);
 
             // Navigate to MoreInfoPage with the scanned item details
-            await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={item.Id}");
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Shell.Current.GoToAsync($"{nameof(MoreInfoPage)}?Id={item.Id}");
+            });
         }
         catch (Exception exception)
         {
