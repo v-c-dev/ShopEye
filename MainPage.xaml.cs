@@ -1,6 +1,4 @@
 using ShopEye.Views;
-using ShopEye.Views;
-using ZXing.Net.Maui;
 
 namespace ShopEye
 {
