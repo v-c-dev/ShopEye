@@ -38,7 +38,7 @@ namespace ShopEye
 
             // TODO: Google Secret Manager or Azure Key Vault would be ideal
             #region barcodespider
-            builder.Services.AddSingleton<IApiService>(s => new ApiService("771e3a2a1093523a174d"));
+            builder.Services.AddSingleton<IApiService>(s => new ApiService("your-api-key-here"));
             #endregion
 
 #if DEBUG
