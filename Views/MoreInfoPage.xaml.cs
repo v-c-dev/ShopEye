@@ -45,4 +45,19 @@ public partial class MoreInfoPage : ContentPage
     {
         Shell.Current.GoToAsync("..");
     }
+
+    private async void btnDelete_OnClicked(object? sender, EventArgs e)
+    {
+        var confirm = await DisplayAlert("Delete", "Are you sure you want to delete this item?", "Yes", "No");
+        if (confirm)
+        {
+            await _databaseService.DeleteItemAsync(_itemId);
+            await Shell.Current.GoToAsync(".."); // Navigate back to the previous page
+        }
+    }
+
+    private void btnHistory_OnClicked(object? sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync(nameof(ScanHistoryPage));
+    }
 }

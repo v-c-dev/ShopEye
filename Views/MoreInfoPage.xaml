@@ -85,7 +85,18 @@
                 Text="Back"
                 SemanticProperties.Hint="Go Back"
                 Clicked="btnBack_OnClicked"/>
-        </VerticalStackLayout>
 
+            <Button
+                x:Name="btnDelete"
+                Text="Delete"
+                SemanticProperties.Hint="Delete"
+                Clicked="btnDelete_OnClicked"/>
+
+            <Button
+                x:Name="btnHistory"
+                Text="Scan History"
+                SemanticProperties.Hint="Go to Scan History Page"
+                Clicked="btnHistory_OnClicked"/>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

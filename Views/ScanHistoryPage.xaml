@@ -32,8 +32,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell 
-                        Text="{Binding Name}"
-                        Detail="{Binding Manufacturer}"/>
+                        Text="{Binding Title}"
+                        Detail="{Binding Brand}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
