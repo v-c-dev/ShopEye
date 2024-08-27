@@ -63,7 +63,6 @@
   </ItemGroup>-->
 
 	<ItemGroup>
-		<PackageReference Include="Google.Cloud.SecretManager.V1" Version="2.5.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
